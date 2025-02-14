@@ -1,19 +1,22 @@
-function Actor(name, surname) {
+function Person(name, surname) {
   (this.name = name), (this.surname = surname);
 }
 
+Person.prototype.sayName = function () {
+  console.log(`Person name is ${this.name}`);
+};
+
 function User(username, password, name, surname) {
-  Actor.call(this, name, surname),
+  Person.call(this, name, surname),
     (this.username = username),
     (this.password = password);
 }
 
-User.prototype = Object.create(Actor.prototype);
-User.prototype.constructor = User;
+User.prototype = {};
 
-Actor.prototype.sayName = function () {
-  console.log(this.name);
-};
+Object.setPrototypeOf(User.prototype, Person.prototype);
+
+User.prototype.constructor = User;
 
 User.prototype.info = function () {
   console.log(
@@ -21,18 +24,25 @@ User.prototype.info = function () {
   );
 };
 
-Object.getPrototypeOf(User.prototype);
+function Producer(name, surname, accessToParamount) {
+  User.call(this, `${name}_admin`, "producerPass", name, surname);
+  this.accessToParamount = accessToParamount;
+}
 
-Object.setPrototypeOf(User.prototype, Actor.prototype);
+Producer.prototype = {};
 
-const user1 = new User("j_caan", "soonyPass", "James", "Caan");
-const user2 = new User("m_brando", "GodFatherPass", "Marlon", "Brando");
-const actor1 = new Actor("Al", "Pacino");
-const actor2 = new Actor("Robert", "De Niro");
+Object.setPrototypeOf(Producer.prototype, User.prototype);
 
-const actorProto = Object.getPrototypeOf(actor1);
-const userProto = Object.getPrototypeOf(user1);
-console.log(actorProto);
-console.log(userProto);
-user1.sayName();
-user2.info();
+Producer.prototype.constructor = Producer;
+
+Producer.prototype.info = function () {
+  console.log(`${this.accessToParamount} is for ${this.name} ${this.surname}`);
+};
+
+const user4 = new User("m_brando", "godfatherPass", "Marlon", "Brando");
+
+const producer = new Producer("Albert", "Ruddy", "AccessToParamount");
+
+user4.sayName();
+user4.info();
+producer.info();
