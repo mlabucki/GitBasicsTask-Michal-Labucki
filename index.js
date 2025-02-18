@@ -1,3 +1,7 @@
+//new instance
+// __proto__ Object.getPropertyOf()
+//constructor
+
 function Person(name, surname) {
   (this.name = name), (this.surname = surname);
 }
